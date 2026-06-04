@@ -1,40 +1,17 @@
-{% extends 'base.html' %}
+<form method="POST">
+    {% csrf_token %}
 
-{% block content %}
-
-<div class="container mt-5">
-
-    <div class="row justify-content-center">
-
-        <div class="col-md-5">
-
-            <div class="card shadow-lg">
-
-                <div class="card-header bg-primary text-white text-center">
-                    <h4>Login to IM Medical Center</h4>
-                </div>
-
-                <div class="card-body">
-
-                    <form method="POST">
-                        {% csrf_token %}
-
-                        {{ form.as_p }}
-
-                        <button class="btn btn-primary w-100 mt-3">
-                            Login
-                        </button>
-
-                    </form>
-
-                </div>
-
-            </div>
-
-        </div>
-
+    <div class="mb-3">
+        <label>Username</label>
+        <input type="text" name="username" class="form-control" required>
     </div>
 
-</div>
+    <div class="mb-3">
+        <label>Password</label>
+        <input type="password" name="password" class="form-control" required>
+    </div>
 
-{% endblock %}
+    <button type="submit" class="btn btn-primary w-100">
+        Login
+    </button>
+</form>

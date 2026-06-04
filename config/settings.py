@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,13 +21,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^dtdybr)%75&q!s&&ur!*y1fws#mu09h0%c5p7@2fr1hv4n_ef'
-
+SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
 
 # Application definition
 
@@ -132,3 +131,27 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+# Security settings for production (Render-friendly)
+if not DEBUG:
+    # Honor X-Forwarded-Proto header for request.is_secure() behind proxies
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    # Ensure cookies are only sent over HTTPS
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+    # Configure CSRF trusted origins. Prefer Render-provided hostname when available.
+    # Render provides RENDER_EXTERNAL_HOSTNAME in the environment for the app's external domain.
+    RENDER_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+    if RENDER_HOSTNAME:
+        CSRF_TRUSTED_ORIGINS = [f"https://{RENDER_HOSTNAME}"]
+    else:
+        CSRF_TRUSTED_ORIGINS = []
+        for host in ALLOWED_HOSTS:
+            if host in ('localhost', '127.0.0.1'):
+                continue
+            if host.startswith('.'):
+                CSRF_TRUSTED_ORIGINS.append(f"https://{host.lstrip('.')}")
+            else:
+                CSRF_TRUSTED_ORIGINS.append(f"https://{host}")
