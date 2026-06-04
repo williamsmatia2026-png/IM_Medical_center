@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="text-center mb-4">
+        <h1 class="fw-bold">Welcome to IM Medical Center</h1>
+        <p class="text-muted">
+            Book appointments online and manage your medical records easily.
+        </p>
+    </div>
+
+    <!-- Quick Cards -->
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="card shadow text-center p-3">
+                <i class="bi bi-calendar-plus fs-1 text-primary"></i>
+                <h5 class="mt-2">Book Appointment</h5>
+                <a href="/appointments/book/" class="btn btn-primary btn-sm mt-2">
+                    Go
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow text-center p-3">
+                <i class="bi bi-calendar-check fs-1 text-success"></i>
+                <h5 class="mt-2">My Appointments</h5>
+                <a href="/appointments/list/" class="btn btn-success btn-sm mt-2">
+                    View
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow text-center p-3">
+                <i class="bi bi-person-badge fs-1 text-warning"></i>
+                <h5 class="mt-2">Doctors</h5>
+                <a href="/appointments/doctors/" class="btn btn-warning btn-sm mt-2">
+                    View
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <hr class="mt-5">
+
+    <div class="text-center">
+        <h4>IM Medical Center System</h4>
+        <p>
+            A complete hospital management system for patients, doctors, and administrators.
+        </p>
+    </div>
+
+</div>
+
+{% endblock %}

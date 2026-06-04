@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h3 class="mb-4">Available Doctors</h3>
+
+    <div class="row">
+
+        {% for doctor in doctors %}
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-person-badge fs-1 text-primary"></i>
+
+                    <h5 class="mt-2">{{ doctor.name }}</h5>
+
+                    <p class="text-muted">
+                        {{ doctor.specialization }}
+                    </p>
+
+                    <a href="/appointments/book/{{ doctor.id }}/" class="btn btn-sm btn-success">
+                        Book Appointment
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p class="text-muted">No doctors available</p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
