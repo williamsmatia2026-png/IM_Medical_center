@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from .forms import PatientRegistrationForm
 
 
 def login_view(request):
@@ -22,7 +22,7 @@ def login_view(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = PatientRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Registration successful. You can now log in.')
@@ -30,7 +30,7 @@ def register(request):
         else:
             messages.error(request, 'Please correct the errors below.')
     else:
-        form = UserCreationForm()
+        form = PatientRegistrationForm()
 
     return render(request, 'accounts/register.html', {'form': form})
 
